@@ -104,7 +104,7 @@ n_classes_lr = y_test_bin.shape[1]
 classifier = OneVsRestClassifier(LogisticRegression(max_iter=2000))
 y_score = classifier.fit(x_train, y_train).predict_proba(x_test)
 
-# Compute ROC curve and ROC area for each class
+# compute ROC curve and ROC area for each class
 fpr_lr = dict()
 tpr_lr = dict()
 roc_auc_lr = dict()
@@ -112,12 +112,11 @@ for i in range(n_classes_lr):
     fpr_lr[i], tpr_lr[i], _ = roc_curve(y_test_bin[:, i], y_score[:, i])
     roc_auc_lr[i] = auc(fpr_lr[i], tpr_lr[i])
 
-# Compute micro-average ROC curve and ROC area
+# compute micro-average ROC curve and ROC area
 fpr_lr["micro"], tpr_lr["micro"], _ = roc_curve(y_test_bin.ravel(), y_score.ravel())
 roc_auc_lr["micro"] = auc(fpr_lr["micro"], tpr_lr["micro"])
 
-fig, ax = plt.subplots(figsize=(12,12))  # Create a single subplot
-
+fig, ax = plt.subplots(figsize=(12,12)) 
 ax.plot(fpr_lr["micro"], tpr_lr["micro"], color='indianred', lw=4,
         label='Micro-average ROC curve (area = {0:0.2f})'
               ''.format(roc_auc_lr["micro"]))
@@ -131,10 +130,10 @@ ax.legend(loc="lower right")
 '''
 #indiv
 
-fig, axes = plt.subplots(6, 5, figsize=(15, 18))  # Create a 6x5 grid of subplots
+fig, axes = plt.subplots(6, 5, figsize=(15, 18)) 
 fig.suptitle("Decision Tree ROC Curves for Each Letter", fontsize=16)
 
-# Plot individual letter ROC curves
+# individual letter ROC curves
 for i, ax in enumerate(axes.ravel()):
     if i < n_classes_lr:
         ax.plot(fpr_lr[i], tpr_lr[i], color='indianred', lw=2,
@@ -146,7 +145,7 @@ for i, ax in enumerate(axes.ravel()):
         ax.set_ylabel('True Positive Rate', fontsize=9, labelpad=5)
         ax.set_title(f"Letter: {np.unique(y)[i]}")
         ax.legend(loc="lower right", fontsize=9)
-        ax.tick_params(axis='both', which='major', labelsize=8)  # Adjust tick label size
+        ax.tick_params(axis='both', which='major', labelsize=8)  
 
     else:
         ax.axis('off')
@@ -154,8 +153,6 @@ for i, ax in enumerate(axes.ravel()):
 plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)  # Adjust layout padding
 plt.show()
 '''
-
-"""### svm"""
 
 #svm
 
@@ -194,7 +191,7 @@ for i in range(n_classes_svm):
     fpr_svm[i], tpr_svm[i], _ = roc_curve(y_test_bin_svm[:, i], y_score_svm[:, i])
     roc_auc_svm[i] = auc(fpr_svm[i], tpr_svm[i])
 
-# Compute micro-average ROC curve and ROC area for SVM
+# compute micro-average ROC curve and ROC area for SVM
 fpr_svm["micro"], tpr_svm["micro"], _ = roc_curve(y_test_bin_svm.ravel(), y_score_svm.ravel())
 roc_auc_svm["micro"] = auc(fpr_svm["micro"], tpr_svm["micro"])
 
@@ -213,10 +210,9 @@ ax.legend(loc="lower right")
 
 #indiv
 
-fig, axes = plt.subplots(6, 5, figsize=(15, 18))  # Create a 6x5 grid of subplots
+fig, axes = plt.subplots(6, 5, figsize=(15, 18))
 fig.suptitle("Decision Tree ROC Curves for Each Letter", fontsize=16)
 
-# Plot individual letter ROC curves
 for i, ax in enumerate(axes.ravel()):
     if i < n_classes_svm:
         ax.plot(fpr_svm[i], tpr_svm[i], color='darkorange', lw=2,
@@ -228,12 +224,12 @@ for i, ax in enumerate(axes.ravel()):
         ax.set_ylabel('True Positive Rate', fontsize=9, labelpad=5)
         ax.set_title(f"Letter: {np.unique(y)[i]}")
         ax.legend(loc="lower right", fontsize=9)
-        ax.tick_params(axis='both', which='major', labelsize=8)  # Adjust tick label size
+        ax.tick_params(axis='both', which='major', labelsize=8)
 
     else:
         ax.axis('off')
 
-plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)  # Adjust layout padding
+plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)
 plt.show()
 
 """### random forest"""
@@ -269,7 +265,7 @@ plt.ylabel('Accuracy')
 
 #random forest confusion matrix
 
-rf_y_pred = forest_model.predict(x_test) #to compare with y_test...
+rf_y_pred = forest_model.predict(x_test)
 
 rf_matrix = confusion_matrix(y_test, rf_y_pred)
 
@@ -300,11 +296,11 @@ for i in range(n_classes_rf):
     fpr_rf[i], tpr_rf[i], _ = roc_curve(y_test_bin_rf[:, i], y_score_rf[:, i])
     roc_auc_rf[i] = auc(fpr_rf[i], tpr_rf[i])
 
-# Compute micro-average ROC curve and ROC area for rf
+
 fpr_rf["micro"], tpr_rf["micro"], _ = roc_curve(y_test_bin_rf.ravel(), y_score_rf.ravel())
 roc_auc_rf["micro"] = auc(fpr_rf["micro"], tpr_rf["micro"])
 
-fig, ax = plt.subplots(figsize=(12,12))  # Create a single subplot
+fig, ax = plt.subplots(figsize=(12,12))  
 
 ax.plot(fpr_rf["micro"], tpr_rf["micro"], color='indianred', lw=4,
         label='Micro-average ROC curve (area = {0:0.2f})'
@@ -321,10 +317,10 @@ ax.legend(loc="lower right")
 '''
 #indiv
 
-fig, axes = plt.subplots(6, 5, figsize=(15, 18))  # Create a 6x5 grid of subplots
+fig, axes = plt.subplots(6, 5, figsize=(15, 18))
 fig.suptitle("Random Forest ROC Curves for Each Letter", fontsize=16)
 
-# Plot individual letter ROC curves
+
 for i, ax in enumerate(axes.ravel()):
     if i < n_classes_rf:
         ax.plot(fpr_rf[i], tpr_rf[i], color='darkorange', lw=2,
@@ -336,16 +332,14 @@ for i, ax in enumerate(axes.ravel()):
         ax.set_ylabel('True Positive Rate', fontsize=9, labelpad=5)
         ax.set_title(f"Letter: {np.unique(y)[i]}")
         ax.legend(loc="lower right", fontsize=9)
-        ax.tick_params(axis='both', which='major', labelsize=8)  # Adjust tick label size
+        ax.tick_params(axis='both', which='major', labelsize=8) 
 
     else:
         ax.axis('off')
 
-plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)  # Adjust layout padding
+plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0) 
 plt.show()
 '''
-
-"""### decision tree"""
 
 #decision tree
 
@@ -362,7 +356,7 @@ dt_y_pred = dt_model.predict(x_test)
 
 dt_matrix = confusion_matrix(y_test, dt_y_pred)
 
-fig, ax = plt.subplots(figsize=(10, 10))  # Adjust the values as needed
+fig, ax = plt.subplots(figsize=(10, 10))
 
 disp = ConfusionMatrixDisplay(dt_matrix, display_labels=lr.classes_)
 disp.plot(ax=ax)
@@ -380,11 +374,10 @@ for i in range(n_classes_dt):
     fpr_dt[i], tpr_dt[i], _ = roc_curve(y_test_bin_dt[:, i], y_score_dt[:, i])
     roc_auc_dt[i] = auc(fpr_dt[i], tpr_dt[i])
 
-# Compute micro-average ROC curve and ROC area for SVM
 fpr_dt["micro"], tpr_dt["micro"], _ = roc_curve(y_test_bin_dt.ravel(), y_score_dt.ravel())
 roc_auc_dt["micro"] = auc(fpr_dt["micro"], tpr_dt["micro"])
 
-fig, ax = plt.subplots(figsize=(12,12))  # Create a single subplot
+fig, ax = plt.subplots(figsize=(12,12)) 
 
 ax.plot(fpr_dt["micro"], tpr_dt["micro"], color='darkorange', lw=2,
         label='Micro-average ROC curve (area = {0:0.2f})'
@@ -399,10 +392,9 @@ ax.legend(loc="lower right")
 
 #indiv
 
-fig, axes = plt.subplots(6, 5, figsize=(15, 18))  # Create a 6x5 grid of subplots
+fig, axes = plt.subplots(6, 5, figsize=(15, 18)) 
 fig.suptitle("Decision Tree ROC Curves for Each Letter", fontsize=16)
 
-# Plot individual letter ROC curves
 for i, ax in enumerate(axes.ravel()):
     if i < n_classes_dt:
         ax.plot(fpr_dt[i], tpr_dt[i], color='darkorange', lw=2,
@@ -414,17 +406,14 @@ for i, ax in enumerate(axes.ravel()):
         ax.set_ylabel('True Positive Rate', fontsize=9, labelpad=5)
         ax.set_title(f"Letter: {np.unique(y)[i]}")
         ax.legend(loc="lower right", fontsize=9)
-        ax.tick_params(axis='both', which='major', labelsize=8)  # Adjust tick label size
+        ax.tick_params(axis='both', which='major', labelsize=8) 
 
     else:
         ax.axis('off')
 
-plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)  # Adjust layout padding
+plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)
 plt.show()
 
-"""### mlp
-
-"""
 
 # mlp
 
@@ -486,11 +475,10 @@ for i in range(n_classes_dt):
     fpr_mlp[i], tpr_mlp[i], _ = roc_curve(y_test_bin_mlp[:, i], y_score_mlp[:, i])
     roc_auc_mlp[i] = auc(fpr_mlp[i], tpr_mlp[i])
 
-# Compute micro-average ROC curve and ROC area for SVM
 fpr_mlp["micro"], tpr_mlp["micro"], _ = roc_curve(y_test_bin_mlp.ravel(), y_score_mlp.ravel())
 roc_auc_mlp["micro"] = auc(fpr_mlp["micro"], tpr_mlp["micro"])
 
-fig, ax = plt.subplots(figsize=(12,12))  # Create a single subplot
+fig, ax = plt.subplots(figsize=(12,12)) 
 
 ax.plot(fpr_mlp["micro"], tpr_mlp["micro"], color='indianred', lw=4,
         label='Micro-average ROC curve (area = {0:0.2f})'
@@ -507,10 +495,9 @@ ax.legend(loc="lower right")
 '''
 #indiv
 
-fig, axes = plt.subplots(6, 5, figsize=(15, 18))  # Create a 6x5 grid of subplots
+fig, axes = plt.subplots(6, 5, figsize=(15, 18)) 
 fig.suptitle("Decision Tree ROC Curves for Each Letter", fontsize=16)
 
-# Plot individual letter ROC curves
 for i, ax in enumerate(axes.ravel()):
     if i < n_classes_mlp:
         ax.plot(fpr_mlp[i], tpr_mlp[i], color='darkorange', lw=2,
@@ -522,7 +509,7 @@ for i, ax in enumerate(axes.ravel()):
         ax.set_ylabel('True Positive Rate', fontsize=9, labelpad=5)
         ax.set_title(f"Letter: {np.unique(y)[i]}")
         ax.legend(loc="lower right", fontsize=9)
-        ax.tick_params(axis='both', which='major', labelsize=8)  # Adjust tick label size
+        ax.tick_params(axis='both', which='major', labelsize=8) 
 
     else:
         ax.axis('off')
@@ -530,10 +517,6 @@ for i, ax in enumerate(axes.ravel()):
 plt.tight_layout(pad=2.0, w_pad=1.0, h_pad=1.0)  # Adjust layout padding
 plt.show()
 '''
-
-"""### cross validation
-
-"""
 
 # k-fold cross validation!
 
@@ -629,7 +612,7 @@ for i in range(total):
   #new_rf_predictions = best_model.predict(x_test)
   '''
 
-"""### results"""
+#results
 
 models = ['Logistic Regression', 'SVM', 'Decision Tree', 'Random Forest', 'MLP']
 accuracies = [lr_accuracy, svm_accuracy, dt_accuracy, rf_accuracy, mlp_accuracy]
@@ -653,22 +636,22 @@ models = {
     'MLP': mlp_y_pred
 }
 
-letters = np.unique(y_test)  # Get all unique letters
+letters = np.unique(y_test)  # get all unique letters
 
 for letter in letters:
-    fig, axes = plt.subplots(1, 6, figsize=(15, 4))  # 5 columns now
+    fig, axes = plt.subplots(1, 6, figsize=(15, 4)) 
     fig.suptitle(f"Predictions for Letter '{letter}'", fontsize=16)
 
-    # Find an example of the actual letter in the test set
+    # find an example of the actual letter in the test set
     actual_letter_index = np.where(y_test == letter)[0][0]
     actual_image = x_test.iloc[actual_letter_index, :].values.reshape(4, 4)
 
-    # Plot the actual letter
+    # plot the actual letter
     axes[0].imshow(actual_image, cmap='binary', interpolation='nearest')
     axes[0].set_title("Actual")
     axes[0].axis('off')
 
-    # Plot model predictions
+    # plot model predictions
     for i, (model_name, y_pred) in enumerate(models.items()):
         letter_indices = np.where(y_pred == letter)[0]
         if len(letter_indices) > 0:
@@ -707,22 +690,22 @@ models = {
     'MLP': mlp_y_pred
 }
 
-letters = np.unique(y_test)  # Get all unique letters
+letters = np.unique(y_test)  # get all unique letters
 
 for letter in letters:
-    fig, axes = plt.subplots(1, 4, figsize=(15, 4))  # 5 columns now
+    fig, axes = plt.subplots(1, 4, figsize=(15, 4))
     fig.suptitle(f"Predictions for Letter '{letter}'", fontsize=16)
 
-    # Find an example of the actual letter in the test set
+    # find an example of the actual letter in the test set
     actual_letter_index = np.where(y_test == letter)[0][0]
     actual_image = x_test.iloc[actual_letter_index, :].values.reshape(4, 4)
 
-    # Plot the actual letter
+    # plot the actual letter
     axes[0].imshow(actual_image, cmap='binary', interpolation='nearest')
     axes[0].set_title("Actual")
     axes[0].axis('off')
 
-    # Plot model predictions
+    # plot model predictions
     for i, (model_name, y_pred) in enumerate(models.items()):
         letter_indices = np.where(y_pred == letter)[0]
         if len(letter_indices) > 0:
